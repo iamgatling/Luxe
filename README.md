@@ -42,7 +42,7 @@ A modern, responsive E-commerce application built with Next.js 16, React 19, Typ
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/iamgatling/luxe
+git clone https://github.com/iamgatling/Luxe.git
 cd luxe
 ```
 
@@ -83,7 +83,7 @@ SUPABASE_SERVICE_ROLE_KEY="your_service_role_key"
 
 1.  **Create a new project** on Supabase.
 2.  **Go to the SQL Editor** in your Supabase dashboard.
-3.  **Run the SQL query `create-tables.sql` in scripts/** to set up the necessary tables (adjust based on your actual schema requirements)
+3.  **Run the SQL query `create-tables.sql` in scripts/** to set up the necessary tables (adjust based on your actual schema requirements).
 4.  **Populate data**: You can insert some dummy data into the `products` table by Running the SQL query `seed-products.sql` in script/ (adjust based on your actual schema requirements).
 
 ### 5. Run the development server
