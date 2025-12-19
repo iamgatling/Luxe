@@ -40,7 +40,7 @@ export function ShippingForm({ onSubmit, isLoading }: ShippingFormProps) {
     country: "US",
   })
 
-  const [errors, setErrors] = useState<Partial<ShippingFormData>>()
+  const [errors, setErrors] = useState<Partial<ShippingFormData>>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
