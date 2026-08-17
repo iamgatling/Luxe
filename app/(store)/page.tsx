@@ -38,11 +38,6 @@ export default async function HomePage() {
                     Shop Collection <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
-                <Link href="/products?category=Electronics">
-                  <Button size="lg" variant="outline">
-                    Browse Electronics
-                  </Button>
-                </Link>
               </div>
             </div>
             <div className="relative aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
