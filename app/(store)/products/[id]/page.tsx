@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ChevronLeft } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { createAdminClient } from "@/lib/supabase/server"
+import { getProductById } from "@/lib/db"
 import { formatCurrency } from "@/lib/utils"
 import type { Product } from "@/lib/types"
 import { AddToCartButton } from "@/components/store/add-to-cart-button"
@@ -12,21 +12,18 @@ interface ProductPageProps {
   params: Promise<{ id: string }>
 }
 
-async function getProduct(id: string): Promise<Product | null> {
-  const supabase = await createAdminClient()
-  const { data, error } = await supabase.from("products").select("*").eq("id", id).eq("is_active", true).single()
-
-  if (error) {
+async function loadProduct(id: string): Promise<Product | null> {
+  try {
+    return await getProductById(id, { activeOnly: true })
+  } catch (error) {
     console.error("Error fetching product:", error)
     return null
   }
-
-  return data
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params
-  const product = await getProduct(id)
+  const product = await loadProduct(id)
 
   if (!product) {
     notFound()

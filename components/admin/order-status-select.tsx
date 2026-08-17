@@ -4,13 +4,14 @@ import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { updateOrderStatus } from "@/app/actions/admin"
 import { toast } from "sonner"
+import type { Order } from "@/lib/types"
 
 interface OrderStatusSelectProps {
   orderId: string
-  currentStatus: string
+  currentStatus: Order["status"]
 }
 
-const statuses = [
+const statuses: Array<{ value: Order["status"]; label: string }> = [
   { value: "pending", label: "Pending" },
   { value: "processing", label: "Processing" },
   { value: "completed", label: "Completed" },
@@ -19,14 +20,15 @@ const statuses = [
 ]
 
 export function OrderStatusSelect({ orderId, currentStatus }: OrderStatusSelectProps) {
-  const [status, setStatus] = useState(currentStatus)
+  const [status, setStatus] = useState<Order["status"]>(currentStatus)
   const [isUpdating, setIsUpdating] = useState(false)
 
-  const handleChange = async (newStatus: string) => {
+  const handleChange = async (value: string) => {
+    if (!isOrderStatus(value)) return
     setIsUpdating(true)
-    setStatus(newStatus)
+    setStatus(value)
 
-    const result = await updateOrderStatus(orderId, newStatus)
+    const result = await updateOrderStatus(orderId, value)
 
     setIsUpdating(false)
 
@@ -52,4 +54,8 @@ export function OrderStatusSelect({ orderId, currentStatus }: OrderStatusSelectP
       </SelectContent>
     </Select>
   )
+}
+
+function isOrderStatus(value: string): value is Order["status"] {
+  return statuses.some((status) => status.value === value)
 }

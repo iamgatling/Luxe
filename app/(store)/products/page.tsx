@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { ProductCard } from "@/components/store/product-card"
-import { createAdminClient } from "@/lib/supabase/server"
+import { getProductCategories, getProducts } from "@/lib/db"
 import type { Product } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -9,45 +9,28 @@ interface ProductsPageProps {
   searchParams: Promise<{ category?: string }>
 }
 
-async function getProducts(category?: string): Promise<Product[]> {
-  const supabase = await createAdminClient()
-  let query = supabase.from("products").select("*").eq("is_active", true).order("created_at", { ascending: false })
-
-  if (category) {
-    query = query.eq("category", category)
-  }
-
-  const { data, error } = await query
-
-  if (error) {
+async function loadProducts(category?: string): Promise<Product[]> {
+  try {
+    return await getProducts(category)
+  } catch (error) {
     console.error("Error fetching products:", error)
     return []
   }
-
-  return data || []
 }
 
-async function getCategories(): Promise<string[]> {
-  const supabase = await createAdminClient()
-  const { data, error } = await supabase
-    .from("products")
-    .select("category")
-    .eq("is_active", true)
-    .not("category", "is", null)
-
-  if (error) {
+async function loadCategories(): Promise<string[]> {
+  try {
+    return await getProductCategories()
+  } catch (error) {
     console.error("Error fetching categories:", error)
     return []
   }
-
-  const categories = [...new Set(data?.map((p) => p.category).filter(Boolean) || [])]
-  return categories as string[]
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const params = await searchParams
   const category = params.category
-  const [products, categories] = await Promise.all([getProducts(category), getCategories()])
+  const [products, categories] = await Promise.all([loadProducts(category), loadCategories()])
 
   return (
     <div className="py-12">

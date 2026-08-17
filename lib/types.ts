@@ -25,8 +25,29 @@ export interface Order {
   status: "pending" | "processing" | "completed" | "cancelled" | "refunded"
   subtotal: number
   total: number
+  shipping_first_name: string | null
+  shipping_last_name: string | null
+  shipping_email: string | null
+  shipping_phone: string | null
+  shipping_address_line1: string | null
+  shipping_address_line2: string | null
+  shipping_city: string | null
+  shipping_state: string | null
+  shipping_postal_code: string | null
+  shipping_country: string | null
   created_at: string
   updated_at: string
+}
+
+export interface InventoryLogWithProduct extends InventoryLog {
+  products: { name: string } | null
+}
+
+export interface ProductSummary {
+  id: string
+  name: string
+  inventory_count: number
+  price: number
 }
 
 export interface OrderItem {

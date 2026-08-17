@@ -1,6 +1,6 @@
 # Luxe
 
-A modern, responsive E-commerce application built with Next.js 16, React 19, TypeScript, Tailwind CSS, Shadcn UI, and Supabase.
+A modern, responsive E-commerce application built with Next.js 16, React 19, TypeScript, Tailwind CSS, Shadcn UI, and PostgreSQL.
 
 ## Features
 
@@ -18,7 +18,7 @@ A modern, responsive E-commerce application built with Next.js 16, React 19, Typ
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Components**: [Shadcn UI](https://ui.shadcn.com/) (Radix UI)
-- **Backend**: [Supabase](https://supabase.com/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **Payments**: [Stripe](https://stripe.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
@@ -26,9 +26,11 @@ A modern, responsive E-commerce application built with Next.js 16, React 19, Typ
 ## Screenshots
 
 ### Home Page
+
 ![Home Page](./public/screenshots/home.webp)
 
 ### Admin Dashboard
+
 ![Admin Dashboard](./public/screenshots/admin.webp)
 
 ## Setup Instructions
@@ -36,7 +38,7 @@ A modern, responsive E-commerce application built with Next.js 16, React 19, Typ
 ### Prerequisites
 
 - Node.js 18+ and pnpm (or npm/yarn/bun)
-- A Supabase account and project
+- A PostgreSQL database and connection string
 - A Stripe account (for payments)
 
 ### 1. Clone the repository
@@ -60,7 +62,7 @@ bun install
 
 ### 3. Environment Variables
 
-Create a `.env` file in the root directory by copying `.env.example`:
+Create a `.env` file in the root directory:
 
 ```bash
 cp .env.example .env
@@ -73,18 +75,15 @@ Update `.env` with your actual credentials:
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
 STRIPE_SECRET_KEY="sk_test_..."
 
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL="https://your-project-ref.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="your_public_anon_key"
-SUPABASE_SERVICE_ROLE_KEY="your_service_role_key"
+# PostgreSQL Configuration
+DATABASE_URL="postgresql://user:password@host:5432/database?sslmode=require"
 ```
 
-### 4. Database Setup (Supabase)
+### 4. Database Setup (PostgreSQL)
 
-1.  **Create a new project** on Supabase.
-2.  **Go to the SQL Editor** in your Supabase dashboard.
-3.  **Run the SQL query `create-tables.sql` in scripts/** to set up the necessary tables (adjust based on your actual schema requirements).
-4.  **Populate data**: You can insert some dummy data into the `products` table by Running the SQL query `seed-products.sql` in script/ (adjust based on your actual schema requirements).
+1. Create a PostgreSQL database for the project.
+2. Run the SQL in `scripts/create-tables.sql` to create the required tables.
+3. Optionally run `scripts/seed-products.sql` to populate product data for development.
 
 ### 5. Run the development server
 
@@ -104,7 +103,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - `components/`: Reusable UI components.
   - `ui/`: Shadcn UI primitives.
   - `store/`: Store-specific components (Header, Footer, etc.).
-- `lib/`: Utility functions and configurations (Stripe, Supabase, Utils).
+- `lib/`: Utility functions and configurations (Stripe, Postgres, Utils).
 - `public/`: Static assets.
 
 ## Deploy
@@ -112,6 +111,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 This project is optimized for [Vercel](https://vercel.com) and uses Vercel Analytics.
 
 The easiest way to deploy is to create a copy of the repository in your GitHub account and set up the project on Vercel.
-
 
 > **Note:** If you choose to deploy on another platform (Netlify, Docker, etc.), you must remove the `<Analytics />` component from `app/layout.tsx` to avoid build errors.

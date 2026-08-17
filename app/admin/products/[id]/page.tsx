@@ -1,23 +1,24 @@
 import { notFound } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ProductForm } from "@/components/admin/product-form"
-import { createAdminClient } from "@/lib/supabase/server"
+import { getProductById } from "@/lib/db"
 
 interface EditProductPageProps {
   params: Promise<{ id: string }>
 }
 
-async function getProduct(id: string) {
-  const supabase = await createAdminClient()
-  const { data, error } = await supabase.from("products").select("*").eq("id", id).single()
-
-  if (error) return null
-  return data
+async function loadProduct(id: string) {
+  try {
+    return await getProductById(id)
+  } catch (error) {
+    console.error("Error fetching product:", error)
+    return null
+  }
 }
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
   const { id } = await params
-  const product = await getProduct(id)
+  const product = await loadProduct(id)
 
   if (!product) {
     notFound()

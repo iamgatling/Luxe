@@ -3,28 +3,20 @@ import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/store/product-card"
-import { createAdminClient } from "@/lib/supabase/server"
+import { getFeaturedProducts } from "@/lib/db"
 import type { Product } from "@/lib/types"
 
-async function getFeaturedProducts(): Promise<Product[]> {
-  const supabase = await createAdminClient()
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(4)
-
-  if (error) {
+async function loadFeaturedProducts(): Promise<Product[]> {
+  try {
+    return await getFeaturedProducts(4)
+  } catch (error) {
     console.error("Error fetching products:", error)
     return []
   }
-
-  return data || []
 }
 
 export default async function HomePage() {
-  const featuredProducts = await getFeaturedProducts()
+  const featuredProducts = await loadFeaturedProducts()
 
   return (
     <div>
