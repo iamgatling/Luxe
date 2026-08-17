@@ -11,26 +11,26 @@ export default async function AdminInventoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold tracking-tight">Inventory</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Inventory</h1>
             <Badge variant="outline" className="rounded-full px-3 py-0.5 text-xs font-semibold">
               {products.length} {products.length === 1 ? "Item" : "Items"}
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm mt-1">Track stock availability, log adjustments, and audit history</p>
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1">Track stock availability, log adjustments, and audit history</p>
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-3 items-start">
-        <div className="lg:col-span-2 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
           <Card className="border border-border/80 shadow-xs">
             <CardHeader className="pb-4 border-b border-border/40">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg font-bold flex items-center gap-2">
-                    <Layers className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-base sm:text-lg font-bold flex items-center gap-2">
+                    <Layers className="h-5 w-5 text-primary shrink-0" />
                     Stock Management
                   </CardTitle>
                   <CardDescription className="text-xs">Adjust and update current product inventory counts</CardDescription>
@@ -83,8 +83,8 @@ export default async function AdminInventoryPage() {
 
                       return (
                         <TableRow key={product.id}>
-                          <TableCell className="font-medium text-foreground">
-                            {product.name}
+                          <TableCell className="font-medium text-foreground max-w-[140px] sm:max-w-xs">
+                            <span className="truncate block">{product.name}</span>
                           </TableCell>
                           <TableCell>
                             <span className="inline-flex items-center rounded-md bg-muted/60 px-2.5 py-0.5 text-xs font-medium text-muted-foreground border border-border/40">
@@ -111,7 +111,7 @@ export default async function AdminInventoryPage() {
                                   </span>
                                 )}
                               </div>
-                              <div className="w-28 bg-muted h-1.5 rounded-full overflow-hidden">
+                              <div className="w-24 sm:w-28 bg-muted h-1.5 rounded-full overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all duration-300 ${
                                     isOut
@@ -144,7 +144,7 @@ export default async function AdminInventoryPage() {
                   </TableFooter>
                 </Table>
               ) : (
-                <div className="flex flex-col items-center justify-center p-12 text-center">
+                <div className="flex flex-col items-center justify-center p-8 sm:p-12 text-center">
                   <PackageOpen className="h-8 w-8 text-muted-foreground mb-2" />
                   <p className="text-sm font-medium">No inventory items found</p>
                 </div>
@@ -153,11 +153,11 @@ export default async function AdminInventoryPage() {
           </Card>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <Card className="border border-border/80 shadow-xs">
             <CardHeader className="pb-4 border-b border-border/40">
               <CardTitle className="text-base font-bold flex items-center gap-2">
-                <History className="h-4 w-4 text-primary" />
+                <History className="h-4 w-4 text-primary shrink-0" />
                 Recent Audit Activity
               </CardTitle>
               <CardDescription className="text-xs">Latest automated and manual stock updates</CardDescription>
@@ -174,12 +174,12 @@ export default async function AdminInventoryPage() {
                         key={log.id}
                         className="flex flex-col gap-1.5 p-3 rounded-lg border border-border/50 bg-muted/20 hover:bg-muted/40 transition-colors"
                       >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-medium text-xs text-foreground line-clamp-1">
+                        <div className="flex items-center justify-between gap-2 min-w-0">
+                          <span className="font-medium text-xs text-foreground truncate flex-1">
                             {(log.products as { name: string } | null)?.name || "Unknown Product"}
                           </span>
                           <span
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider shrink-0 ${
                               log.change_type === "sale"
                                 ? "bg-destructive/10 text-destructive border border-destructive/20"
                                 : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
@@ -206,7 +206,7 @@ export default async function AdminInventoryPage() {
                             {new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
-                        {log.notes && <p className="text-[11px] text-muted-foreground/90 italic">{log.notes}</p>}
+                        {log.notes && <p className="text-[11px] text-muted-foreground/90 italic truncate">{log.notes}</p>}
                       </div>
                     )
                   })}

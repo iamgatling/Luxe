@@ -13,18 +13,18 @@ export default async function AdminProductsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Products</h1>
             <Badge variant="outline" className="rounded-full px-3 py-0.5 text-xs font-semibold">
               {products.length} {products.length === 1 ? "Product" : "Products"}
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm mt-1">Manage your catalog, stock levels, and pricing</p>
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1">Manage your catalog, stock levels, and pricing</p>
         </div>
-        <Link href="/admin/products/new">
-          <Button className="gap-2 shadow-xs hover:shadow-md transition-all">
+        <Link href="/admin/products/new" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto gap-2 shadow-xs hover:shadow-md transition-all">
             <Plus className="h-4 w-4" />
             Add Product
           </Button>
@@ -35,7 +35,7 @@ export default async function AdminProductsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-16"></TableHead>
+              <TableHead className="w-12 sm:w-16"></TableHead>
               <TableHead>
                 <div className="flex items-center gap-1.5">
                   <Package className="h-3.5 w-3.5" />
@@ -76,8 +76,8 @@ export default async function AdminProductsPage() {
 
               return (
                 <TableRow key={product.id}>
-                  <TableCell>
-                    <div className="relative h-11 w-11 overflow-hidden rounded-lg border border-border/60 bg-muted/50 shadow-2xs group-hover:scale-105 transition-transform duration-200">
+                  <TableCell className="p-2 sm:p-4">
+                    <div className="relative h-10 w-10 sm:h-11 sm:w-11 overflow-hidden rounded-lg border border-border/60 bg-muted/50 shadow-2xs">
                       <Image
                         src={product.image_url || "/placeholder.svg?height=44&width=44"}
                         alt={product.name}
@@ -86,8 +86,8 @@ export default async function AdminProductsPage() {
                       />
                     </div>
                   </TableCell>
-                  <TableCell className="font-medium text-foreground">
-                    <span className="line-clamp-1">{product.name}</span>
+                  <TableCell className="font-medium text-foreground max-w-[150px] sm:max-w-xs">
+                    <span className="truncate block">{product.name}</span>
                   </TableCell>
                   <TableCell>
                     <span className="inline-flex items-center rounded-md bg-muted/60 px-2.5 py-1 text-xs font-medium text-muted-foreground border border-border/40">
@@ -132,7 +132,7 @@ export default async function AdminProductsPage() {
                     )}
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1.5">
+                    <div className="flex items-center justify-end gap-1">
                       <Link href={`/admin/products/${product.id}`}>
                         <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted text-muted-foreground hover:text-foreground">
                           <Pencil className="h-4 w-4" />
@@ -155,16 +155,16 @@ export default async function AdminProductsPage() {
           </TableFooter>
         </Table>
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border p-12 text-center bg-card/50">
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border p-8 sm:p-12 text-center bg-card/50">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted mb-4">
             <PackageOpen className="h-6 w-6 text-muted-foreground" />
           </div>
           <h3 className="text-lg font-semibold">No products found</h3>
-          <p className="text-sm text-muted-foreground mt-1 mb-6 max-w-sm">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 mb-6 max-w-sm">
             Your catalog is currently empty. Start adding products or seed initial data to manage catalog items.
           </p>
-          <Link href="/admin/products/new">
-            <Button className="gap-2">
+          <Link href="/admin/products/new" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto gap-2">
               <Plus className="h-4 w-4" />
               Add First Product
             </Button>

@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 export default function AdminDashboardLoading() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-2">
           <Skeleton className="h-8 w-40 rounded-lg" />
           <Skeleton className="h-4 w-64 rounded" />
@@ -14,7 +14,7 @@ export default function AdminDashboardLoading() {
       </div>
 
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Card key={i}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -30,7 +30,7 @@ export default function AdminDashboardLoading() {
       </div>
 
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">

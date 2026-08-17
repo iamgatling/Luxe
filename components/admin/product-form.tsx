@@ -79,7 +79,7 @@ export function ProductForm({ product }: ProductFormProps) {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="price">Price ($)</Label>
           <Input
@@ -125,10 +125,10 @@ export function ProductForm({ product }: ProductFormProps) {
         />
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div className="space-y-0.5">
           <Label htmlFor="is_active">Active</Label>
-          <p className="text-sm text-muted-foreground">Make this product visible in the store</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Make this product visible in the store</p>
         </div>
         <Switch
           id="is_active"
@@ -137,11 +137,11 @@ export function ProductForm({ product }: ProductFormProps) {
         />
       </div>
 
-      <div className="flex gap-4">
-        <Button type="submit" isLoading={isLoading}>
+      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
+        <Button type="submit" isLoading={isLoading} className="w-full sm:w-auto">
           {product ? "Update Product" : "Create Product"}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.back()} disabled={isLoading}>
+        <Button type="button" variant="outline" onClick={() => router.back()} disabled={isLoading} className="w-full sm:w-auto">
           Cancel
         </Button>
       </div>

@@ -45,15 +45,15 @@ export default async function AdminOrdersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Orders</h1>
             <Badge variant="outline" className="rounded-full px-3 py-0.5 text-xs font-semibold">
               {orders.length} {orders.length === 1 ? "Order" : "Orders"}
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm mt-1">Track customer orders, updates, and fulfillment statuses</p>
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1">Track customer orders, updates, and fulfillment statuses</p>
         </div>
       </div>
 
@@ -117,14 +117,14 @@ export default async function AdminOrdersPage() {
                       #{order.id.slice(0, 8)}
                     </span>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
+                  <TableCell className="max-w-[150px] sm:max-w-xs">
+                    <div className="flex items-center gap-2.5 min-w-0">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-xs border border-primary/20 shrink-0">
                         {customerInitials}
                       </div>
-                      <div className="min-w-0">
-                        <p className="font-medium text-foreground text-sm line-clamp-1">{order.customer_name}</p>
-                        <p className="text-xs text-muted-foreground line-clamp-1">{order.customer_email}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-foreground text-sm truncate">{order.customer_name}</p>
+                        <p className="text-xs text-muted-foreground truncate">{order.customer_email}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -155,12 +155,12 @@ export default async function AdminOrdersPage() {
           </TableFooter>
         </Table>
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border p-12 text-center bg-card/50">
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border p-8 sm:p-12 text-center bg-card/50">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted mb-4">
             <ShoppingBag className="h-6 w-6 text-muted-foreground" />
           </div>
           <h3 className="text-lg font-semibold">No orders yet</h3>
-          <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-sm">
             Customer orders will automatically appear here once checkouts are completed.
           </p>
         </div>
