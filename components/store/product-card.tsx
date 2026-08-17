@@ -1,13 +1,12 @@
 "use client"
 
-import type React from "react"
-
-import Image from "next/image"
+import { useState, type React } from "react"
 import Link from "next/link"
-import { Plus } from "lucide-react"
+import { Check, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { ImageWithSkeleton } from "@/components/ui/image-with-skeleton"
 import { useCart } from "@/lib/cart-context"
 import { formatCurrency } from "@/lib/utils"
 import type { Product } from "@/lib/types"
@@ -19,12 +18,17 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
+  const [isAdding, setIsAdding] = useState(false)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
-    if (product.inventory_count > 0) {
+    if (product.inventory_count > 0 && !isAdding) {
+      setIsAdding(true)
       addItem(product)
       toast.success(`${product.name} added to cart`)
+      setTimeout(() => {
+        setIsAdding(false)
+      }, 500)
     }
   }
 
@@ -34,14 +38,15 @@ export function ProductCard({ product }: ProductCardProps) {
     <Card className="group overflow-hidden border-0 shadow-none bg-transparent">
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
-          <Image
+          <ImageWithSkeleton
             src={product.image_url || "/placeholder.svg?height=400&width=400"}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
+            containerClassName="size-full"
           />
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+            <div className="absolute inset-0 bg-background/80 flex items-center justify-center z-20">
               <Badge variant="secondary" className="text-sm">
                 Out of Stock
               </Badge>
@@ -50,10 +55,11 @@ export function ProductCard({ product }: ProductCardProps) {
           {!isOutOfStock && (
             <Button
               size="icon"
-              className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+              className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-20"
               onClick={handleAddToCart}
+              isLoading={isAdding}
             >
-              <Plus className="h-4 w-4" />
+              {!isAdding && <Plus className="h-4 w-4" />}
               <span className="sr-only">Add to cart</span>
             </Button>
           )}
@@ -71,3 +77,4 @@ export function ProductCard({ product }: ProductCardProps) {
     </Card>
   )
 }
+

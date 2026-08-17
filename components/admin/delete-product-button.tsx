@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Trash2, Loader2 } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,12 +56,14 @@ export function DeleteProductButton({ productId, productName }: DeleteProductBut
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            disabled={isLoading}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 gap-2"
           >
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Delete"}
+            {isLoading ? <Spinner className="h-4 w-4" /> : null}
+            {isLoading ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

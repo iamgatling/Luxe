@@ -15,11 +15,17 @@ interface AddToCartButtonProps {
 export function AddToCartButton({ product, disabled }: AddToCartButtonProps) {
   const { addItem } = useCart()
   const [quantity, setQuantity] = useState(1)
+  const [isAdding, setIsAdding] = useState(false)
 
   const handleAddToCart = () => {
+    if (disabled || isAdding) return
+    setIsAdding(true)
     addItem(product, quantity)
     toast.success(`${quantity} x ${product.name} added to cart`)
     setQuantity(1)
+    setTimeout(() => {
+      setIsAdding(false)
+    }, 400)
   }
 
   return (
@@ -30,7 +36,7 @@ export function AddToCartButton({ product, disabled }: AddToCartButtonProps) {
           size="icon"
           className="rounded-r-none"
           onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          disabled={quantity <= 1}
+          disabled={quantity <= 1 || isAdding}
         >
           <Minus className="h-4 w-4" />
           <span className="sr-only">Decrease quantity</span>
@@ -41,16 +47,23 @@ export function AddToCartButton({ product, disabled }: AddToCartButtonProps) {
           size="icon"
           className="rounded-l-none"
           onClick={() => setQuantity(Math.min(product.inventory_count, quantity + 1))}
-          disabled={quantity >= product.inventory_count}
+          disabled={quantity >= product.inventory_count || isAdding}
         >
           <Plus className="h-4 w-4" />
           <span className="sr-only">Increase quantity</span>
         </Button>
       </div>
-      <Button size="lg" className="flex-1 gap-2" onClick={handleAddToCart} disabled={disabled}>
-        <ShoppingBag className="h-4 w-4" />
-        {disabled ? "Out of Stock" : "Add to Cart"}
+      <Button
+        size="lg"
+        className="flex-1 gap-2"
+        onClick={handleAddToCart}
+        disabled={disabled}
+        isLoading={isAdding}
+      >
+        {!isAdding && <ShoppingBag className="h-4 w-4" />}
+        {disabled ? "Out of Stock" : isAdding ? "Adding..." : "Add to Cart"}
       </Button>
     </div>
   )
 }
+

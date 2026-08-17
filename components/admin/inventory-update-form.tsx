@@ -69,11 +69,10 @@ export function InventoryUpdateForm({ productId, currentStock }: InventoryUpdate
             />
           </div>
           <div className="flex gap-2">
-            <Button type="submit" size="sm" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button type="submit" size="sm" isLoading={isLoading}>
               Save
             </Button>
-            <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)}>
+            <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)} disabled={isLoading}>
               Cancel
             </Button>
           </div>

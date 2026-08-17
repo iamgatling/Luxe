@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Spinner } from "@/components/ui/spinner"
 import { updateOrderStatus } from "@/app/actions/admin"
 import { toast } from "sonner"
 import type { Order } from "@/lib/types"
@@ -42,8 +43,15 @@ export function OrderStatusSelect({ orderId, currentStatus }: OrderStatusSelectP
 
   return (
     <Select value={status} onValueChange={handleChange} disabled={isUpdating}>
-      <SelectTrigger className="w-32">
-        <SelectValue />
+      <SelectTrigger className="w-36">
+        {isUpdating ? (
+          <div className="flex items-center gap-2">
+            <Spinner className="h-3.5 w-3.5" />
+            <span className="text-xs text-muted-foreground">Updating...</span>
+          </div>
+        ) : (
+          <SelectValue />
+        )}
       </SelectTrigger>
       <SelectContent>
         {statuses.map((s) => (

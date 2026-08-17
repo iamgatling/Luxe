@@ -1,14 +1,22 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { toast } from 'sonner'
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Thank you for your message! We will get back to you soon.')
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setIsSubmitting(false)
+      toast.success('Thank you for your message! We will get back to you soon.')
+    }, 500)
   }
 
   return (
@@ -42,7 +50,9 @@ export default function ContactPage() {
               <Textarea id="message" placeholder="Your message..." className="min-h-[150px]" required />
             </div>
 
-            <Button type="submit" className="w-full">Send Message</Button>
+            <Button type="submit" className="w-full" isLoading={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </Button>
           </form>
         </div>
 

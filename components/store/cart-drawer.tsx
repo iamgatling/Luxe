@@ -1,9 +1,9 @@
 "use client"
 
 import { X, Minus, Plus, ShoppingBag } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ImageWithSkeleton } from "@/components/ui/image-with-skeleton"
 import { useCart } from "@/lib/cart-context"
 import { formatCurrency } from "@/lib/utils"
 
@@ -43,7 +43,7 @@ export function CartDrawer() {
               {state.items.map((item) => (
                 <li key={item.product.id} className="flex gap-4 py-4 border-b border-border last:border-0">
                   <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
-                    <Image
+                    <ImageWithSkeleton
                       src={item.product.image_url || "/placeholder.svg?height=80&width=80"}
                       alt={item.product.name}
                       fill

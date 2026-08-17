@@ -138,11 +138,10 @@ export function ProductForm({ product }: ProductFormProps) {
       </div>
 
       <div className="flex gap-4">
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        <Button type="submit" isLoading={isLoading}>
           {product ? "Update Product" : "Create Product"}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.back()}>
+        <Button type="button" variant="outline" onClick={() => router.back()} disabled={isLoading}>
           Cancel
         </Button>
       </div>

@@ -248,7 +248,7 @@ export function ShippingForm({ onSubmit, isLoading }: ShippingFormProps) {
           </select>
         </div>
 
-        <Button type="submit" size="lg" disabled={isLoading} className="w-full">
+        <Button type="submit" size="lg" isLoading={isLoading} className="w-full">
           {isLoading ? "Processing..." : "Continue to Payment"}
         </Button>
       </form>
