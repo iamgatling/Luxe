@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type React } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { Check, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
