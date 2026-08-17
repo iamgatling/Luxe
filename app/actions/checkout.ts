@@ -57,7 +57,7 @@ export async function createCheckoutSession(items: CartItem[]): Promise<Checkout
     }
 
     const session = await stripe.checkout.sessions.create({
-      ui_mode: "embedded",
+      ui_mode: "embedded_page",
       redirect_on_completion: "never",
       line_items: items.map((item) => ({
         price_data: {
