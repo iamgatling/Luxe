@@ -37,7 +37,7 @@ A modern, responsive E-commerce application built with Next.js 16, React 19, Typ
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm (or npm/yarn/bun)
+- Node.js 18+ and npm
 - A PostgreSQL database and connection string
 - A Stripe account (for payments)
 
@@ -51,13 +51,7 @@ cd luxe
 ### 2. Install dependencies
 
 ```bash
-pnpm install
-# or
 npm install
-# or
-yarn install
-# or
-bun install
 ```
 
 ### 3. Environment Variables
@@ -88,8 +82,6 @@ DATABASE_URL="postgresql://user:password@host:5432/database?sslmode=require"
 ### 5. Run the development server
 
 ```bash
-pnpm dev
-# or
 npm run dev
 ```
 

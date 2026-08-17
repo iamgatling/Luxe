@@ -2,6 +2,7 @@
   "name": "luxe",
   "version": "1.0",
   "private": true,
+  "packageManager": "npm@11.6.2",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
