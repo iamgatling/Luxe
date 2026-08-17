@@ -41,7 +41,7 @@ export default async function HomePage() {
               </div>
             </div>
             <div className="relative aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
-              <Image src="/premium-lifestyle-products-flatlay.jpg" alt="Featured products" fill className="object-cover" priority />
+              <Image src="/luxury-lifestyle-hero.png" alt="Curated luxury lifestyle products" fill className="object-cover" priority />
             </div>
           </div>
         </div>
